@@ -15,6 +15,8 @@ dotenv.config();
 const PORT = process.env.PORT || 4300;
 const store_id = process.env.STORE_ID;
 const store_passwd = process.env.STORE_PASSWD;
+// const dbUri = process.env.DB_URI;
+const dbUri = "mongodb://localhost:27017/";
 const is_live = false; //true for live, false for sandbox
 
 // Initialize
@@ -23,7 +25,7 @@ app.use(express.json());
 app.use(cors());
 app.use(morgan("dev"));
 
-const client = new MongoClient(process.env.DB_URI, {
+const client = new MongoClient(dbUri, {
   serverApi: {
     version: ServerApiVersion.v1,
     strict: true,
@@ -211,7 +213,6 @@ async function run() {
             paymentStatus: false,
           });
 
-          
           // Success Payment
           app.post("/payment/success/:transactionID", async (req, res) => {
             const { transactionID } = req.params;
