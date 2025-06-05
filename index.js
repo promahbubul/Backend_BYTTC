@@ -15,8 +15,8 @@ dotenv.config();
 const PORT = process.env.PORT || 4300;
 const store_id = process.env.STORE_ID;
 const store_passwd = process.env.STORE_PASSWD;
-// const dbUri = process.env.DB_URI;
-const dbUri = "mongodb://localhost:27017/";
+const dbUri = process.env.DB_URI;
+// const dbUri = "mongodb://localhost:27017/";
 const is_live = false; //true for live, false for sandbox
 
 // Initialize
@@ -66,6 +66,7 @@ async function run() {
       user.type = "user";
 
       const existUser = await userCollection.findOne({ email: user.email });
+      console.log(existUser);
       if (existUser) {
         return res.status(201).json({
           message: "user already exist",
